@@ -1,0 +1,22 @@
+{
+	"name": "Free Rider Toolkit",
+	"version": "0.0.1",
+	"author": "Calculamatrise",
+	"description": "An extended toolset for Free Rider HD.",
+	"manifest_version": 3,
+	"action": { "default_popup": "popup/index.html" },
+	"background": {
+		"service_worker": "service-worker.js",
+		"type": "module"
+	},
+	"icons": {
+		"16": "icons/icon_16.png",
+		"48": "icons/icon_48.png",
+		"128": "icons/icon_128.png"
+	},
+	"permissions": ["contextMenus", "scripting", "storage"],
+	"host_permissions": [
+		"*://frhd.kanoapps.com/*",
+		"*://www.freeriderhd.com/*"
+	]
+}
