@@ -1,18 +1,20 @@
-FreeRiderToolkit.modules.set('profileSearch', async function() {
+{
+
+toolkit.modules.register('profileSearch', async function() {
 	if (!location.pathname.match(/^\/u\//i)) return;
-	const container = await this.constructor.waitForElm('.tab_buttons');
+	const container = await toolkit.waitForElm('.tab_buttons');
 	if (!container) return;
-	const modContainer = container.querySelector('.mod-container') || container.appendChild(this.constructor.createElement('div.mod-container'));
-	const details = modContainer.appendChild(this.constructor.createElement('details.sort-filter', {
+	const modContainer = container.querySelector('.mod-container') || container.appendChild(toolkit.createElement('div.mod-container'));
+	const details = modContainer.appendChild(toolkit.createElement('details.sort-filter', {
 		children: [
-			this.constructor.createElement('summary.new-button.button-type-1', {
+			toolkit.createElement('summary.new-button.button-type-1', {
 				innerText: 'Sort & Filter'
 			}),
-			this.constructor.createElement('main', {
+			toolkit.createElement('main', {
 				children: [
-					this.constructor.createElement('search', {
+					toolkit.createElement('search', {
 						children: [
-							this.constructor.createElement('input', {
+							toolkit.createElement('input', {
 								type: 'search',
 								name: 'query',
 								placeholder: 'Search',
@@ -20,11 +22,11 @@ FreeRiderToolkit.modules.set('profileSearch', async function() {
 							})
 						]
 					}),
-					this.constructor.createElement('div.opts', {
+					toolkit.createElement('div.opts', {
 						children: [
-							this.constructor.createElement('label', {
+							toolkit.createElement('label', {
 								children: [
-									this.constructor.createElement('input', {
+									toolkit.createElement('input', {
 										disabled: true,
 										type: 'checkbox',
 										name: 'completed',
@@ -34,11 +36,11 @@ FreeRiderToolkit.modules.set('profileSearch', async function() {
 								innerText: 'Hide completed',
 								style: { opacity: .5 }
 							}),
-							this.constructor.createElement('label', {
+							toolkit.createElement('label', {
 								children: [
-									this.constructor.createElement('select', {
+									toolkit.createElement('select', {
 										children: [
-											this.constructor.createElement('option', {
+											toolkit.createElement('option', {
 												checked: true,
 												innerText: 'Select an author…',
 												value: 'default'
@@ -46,7 +48,7 @@ FreeRiderToolkit.modules.set('profileSearch', async function() {
 											...Array.from(new Set(Array.from(document.querySelectorAll('.panels .author')).map(n => n.textContent.trim())))
 												.sort()
 												.map(author =>
-													this.constructor.createElement('option', {
+													toolkit.createElement('option', {
 														innerText: author,
 														value: author
 													})
@@ -59,9 +61,9 @@ FreeRiderToolkit.modules.set('profileSearch', async function() {
 								innerText: 'Filter by author',
 								multiple: true
 							}),
-							this.constructor.createElement('label', {
+							toolkit.createElement('label', {
 								children: [
-									this.constructor.createElement('input', {
+									toolkit.createElement('input', {
 										type: 'checkbox',
 										name: 'titles',
 										onchange: () => updateTracks(details)
@@ -69,34 +71,34 @@ FreeRiderToolkit.modules.set('profileSearch', async function() {
 								],
 								innerText: 'Only search titles'
 							}),
-							this.constructor.createElement('label', {
+							toolkit.createElement('label', {
 								children: [
-									this.constructor.createElement('select', {
+									toolkit.createElement('select', {
 										children: [
-											this.constructor.createElement('option', {
+											toolkit.createElement('option', {
 												innerText: 'Sort by…',
 												value: 'default'
 											}),
-											this.constructor.createElement('option', {
+											toolkit.createElement('option', {
 												innerText: 'Alphabet',
 												value: 'alpha'
 											}),
-											this.constructor.createElement('option', {
+											toolkit.createElement('option', {
 												disabled: true,
 												innerText: 'Date',
 												value: 'date'
 											}),
-											this.constructor.createElement('option', {
+											toolkit.createElement('option', {
 												disabled: true,
 												innerText: 'Rating',
 												value: 'rating'
 											}),
-											this.constructor.createElement('option', {
+											toolkit.createElement('option', {
 												disabled: true,
 												innerText: 'Size',
 												value: 'size'
 											}),
-											this.constructor.createElement('option', {
+											toolkit.createElement('option', {
 												innerText: 'Time',
 												value: 'time'
 											})
@@ -113,9 +115,9 @@ FreeRiderToolkit.modules.set('profileSearch', async function() {
 								],
 								innerText: 'Sort by'
 							}),
-							this.constructor.createElement('label', {
+							toolkit.createElement('label', {
 								children: [
-									this.constructor.createElement('input', {
+									toolkit.createElement('input', {
 										type: 'checkbox',
 										name: 'reverse',
 										disabled: true,
@@ -126,7 +128,7 @@ FreeRiderToolkit.modules.set('profileSearch', async function() {
 							})
 						]
 					}),
-					this.constructor.createElement('button.new-button.button-type-1.danger', {
+					toolkit.createElement('button.new-button.button-type-1.danger', {
 						disabled: true,
 						innerText: 'Clear',
 						onclick() {
@@ -213,7 +215,7 @@ function updateTracks(details) {
 	activePanel.replaceChildren(...filtered)
 }
 
-FreeRiderToolkit.styleSheet
+toolkit.styleSheet
 	.set('.tab_buttons', { position: 'relative' })
 	.set('.tab_buttons > .mod-container', {
 		bottom: 0,
@@ -287,4 +289,6 @@ FreeRiderToolkit.styleSheet
 	.set('.tab_buttons .sort-filter > main > button:last-child:disabled', {
 		opacity: .5,
 		pointerEvents: 'none'
-	});
+	})
+
+}

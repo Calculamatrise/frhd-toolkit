@@ -1,9 +1,13 @@
 export default {
 	accountManager: false,
 	achievementMonitor: true,
+	bestRaceDate: true,
+	contextMenu: true,
 	developerMode: false,
-	// exportThreshold: 4e5,
 	featuredGhostsDisplay: true,
-	// keymap: {},
-	playlists: false
+	flagSensitivity: 1,
+	lastSeen: false,
+	lastSeenProfile: false,
+	playlists: false,
+	profileSearch: true
 }

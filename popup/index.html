@@ -2,22 +2,18 @@
 <html>
 <head>
 	<link rel="stylesheet" href="style.css">
+	<script src="ux.js"></script>
 	<script type="module" src="script.js" defer></script>
 </head>
 <body class="view">
-	<div style="display:flex;gap:.25em;">
-		<button class="tab" id="state"></button>
-		<button id="sponsor">
-			<svg aria-hidden="true" height="16" viewBox="0 0 16 16" width="16" fill="#c96198">
-				<path d="m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z"></path>
-			</svg>
-			<!-- show sponsor text only on hover-- expand width -->
-			<!-- <span>Sponsor</span> -->
-		</button>
-	</div>
+	<header style="display:flex;gap:.25em;">
+		<button id="sponsor">Sponsor</button>
+		<!-- Small square update button when available? -->
+		<!-- <button class="tab" id="state"></button> -->
+	</header>
 	<nav>
-		<label for="options" class="tab ripple">Options</label>
-		<label for="keybinds" class="tab ripple disabled">Keybinds</label>
+		<button id="dashboard">Dashboard</button>
+		<!-- <button id="accounts" disabled>Switch Accounts</button> -->
 	</nav>
 	<div class="details">
 		<input type="radio" name="nav" id="options" checked>
@@ -30,51 +26,49 @@
 			<span>Achievement monitor</span>
 		</label>
 		<label class="ripple" title="Displays featured ghosts on the leaderboard">
+			<input type="checkbox" id="bestRaceDate">
+			<span>Best race date</span>
+		</label>
+		<label class="ripple" title="Displays featured ghosts on the leaderboard">
 			<input type="checkbox" id="featuredGhostsDisplay">
 			<span>Featured ghosts</span>
 		</label>
+		<label class="ripple" title="Display last activity on all friends lists">
+			<input type="checkbox" id="lastSeen">
+			<span>Last activity</span>
+		</label>
+		<label class="ripple" title="Display last activity on user profiles" style="margin-left: 1.5em">
+			<input type="checkbox" id="lastSeenProfile">
+			<span>Display on profile</span>
+		</label>
+		<label class="ripple" title="Search and filter tracks on profiles">
+			<input type="checkbox" id="profileSearch" checked disabled>
+			<span>Profile search</span>
+		</label>
 		<details>
 			<summary class="tab ripple">Show advanced options</summary>
+			<label class="ripple" title="Enable custom context menu with added options">
+				<input type="checkbox" id="contextMenu" checked>
+				<span>Context menu</span>
+			</label>
 			<label class="ripple" title="Toggle developer mode">
 				<input type="checkbox" id="developerMode">
 				<span>Developer mode</span>
 			</label>
-			<!-- <label title="Change the maximum number of characters for the track code to be displayed in the export dialog">
-				<span class="name" data-value="400000">Export threshold</span>
-				<input type="range" class="override-pointer-events" id="exportThreshold" min="100000" max="1000000" value="400000" step="50000" style="width: -webkit-fill-available">
-			</label> -->
 			<details data-type="experiments" style="display: none;">
 				<summary class="tab ripple">Experiments</summary>
 				<label class="ripple" title="Toggle track playlists">
 					<input type="checkbox" id="playlists">
 					<span>Playlists</span>
 				</label>
+				<label title="Adjust how extreme a race time must be compared to others before being flagged">
+					<span class="name">Flag sensitivity</span>
+					<input type="range" class="override-pointer-events" id="flagSensitivity" min="0.1" value="1" max="2" step="0.1" style="width:100%">
+				</label>
 			</details>
 			<button class="tab ripple" id="reset-settings" title="Reset all the settings to their default state (THIS CANNOT BE UNDONE)">Reset settings</button>
 		</details>
 	</div>
-	<div class="details">
-		<input type="radio" name="nav" id="keybinds">
-		<div class="keybind-wrapper">
-			<select id="keybind-action">
-				<option value="default" disabled selected>Select an action</option>
-				<option value="down">Down</option>
-				<option value="left">Left</option>
-				<option value="pause">Pause</option>
-				<option value="right">Right</option>
-				<option value="up">Up</option>
-				<option value="z">Z</option>
-			</select>
-			<input type="text" id="keymap" maxlength="1" placeholder="Keybind" style="min-width: 0;text-transform: uppercase;">
-		</div>
-		<button id="save-keybind" style="
-			border: 1px solid;
-			display: none;
-			margin: 4px 0;
-			padding: 0.25rem;
-			width: -webkit-fill-available;
-		">Save</button><br>
-		<div id="keybind-entries"></div>
-	</div>
+	<footer>Version: <span id="version"></span></footer>
 </body>
 </html>

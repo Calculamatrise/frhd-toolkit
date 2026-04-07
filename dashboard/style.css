@@ -1,91 +1,219 @@
+@import url("icons.css");
+
+:root {
+	--background-color: hsl(var(--base-hue) 16% 8%)
+}
+
+.notice {
+	background-color: hsl(0 33% 13%);
+	border-bottom: 1px solid var(--border-color);
+	margin: -.75rem;
+	padding-block: 1em;
+	padding-inline: 40px;
+}
+
 body {
-	overflow: hidden;
-	width: auto;
+	font-size: medium;
+	width: calc(100% - 1.5rem);
 }
 
-body > main {
-	margin: 1rem auto;
-	max-height: 95vh;
-	overflow: auto;
-	padding: 0 1rem;
-	width: fit-content;
-}
-
-body > main > [caption]::before {
-	background-color: var(--background-color);
-	content: attr(caption);
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: clamp(12px, 2vw, 20px);
-	margin: 0.5em 0;
-	position: sticky;
-	text-decoration: underline;
-	text-decoration-color: var(--border-color);
-	text-transform: capitalize;
-	text-underline-position: under;
-	top: 0;
-	z-index: 1;
-}
-
-body > main > section {
+body > nav {
+	border-bottom: 1px solid var(--border-color);
 	display: flex;
-	flex-direction: column;
-	gap: 0.5em;
+	justify-content: space-between;
+	margin-bottom: .65em;
+	overflow: auto hidden;
+	padding-bottom: .35em;
 }
 
-input:is([type="email"], [type="number"], [type="password"], [type="text"]) {
-	padding: 0.5em;
-}
-
-section.locked {
-	position: relative;
-	width: min-content;
-}
-
-section.locked::after {
-	background-color: white;
-	bottom: 0;
-	color: red;
-	content: "Access denied!";
-	height: 100%;
-	left: 0;
-	margin: auto;
-	position: absolute;
-	right: 0;
-	top: 0;
+body > nav > label {
 	width: 100%;
 }
 
-.flex {
+.user-card {
+	align-items: center;
+	box-sizing: border-box;
 	display: flex;
-	gap: 0.25rem;
+	gap: .85em;
+	padding: .45em;
 }
 
-.max-width > * {
-	/* width: 100%; */
-	width: -webkit-fill-available;
+body > .user-card {
+	gap: 1.25em;
+	margin-bottom: 1em;
+	width: 100%;
 }
 
-.fill-available {
-	width: -webkit-fill-available
+body > .user-card .avatar-wrapper {
+	border-radius: 50%;
+	overflow: hidden;
 }
 
-.track-actions {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+body > .user-card .avatar-wrapper { position: relative }
+body > .user-card .avatar-wrapper:hover { cursor: pointer }
+body > .user-card .avatar-wrapper:hover::after {
+	align-items: center;
+	backdrop-filter: brightness(.5);
+	border-radius: 50%;
+	content: "Change";
+	display: flex;
+	font-size: larger;
+	inset: 0;
+	justify-content: center;
+	position: absolute;
 }
 
-dialog {
-	backdrop-filter: blur(0.4rem) brightness(80%);
-	background-color: hsl(210deg 16% 14% / 60%);
-	border-color: var(--accent-color);
+:is(.track-card, .user-card) > .metadata {
+	display: flex;
+	flex-direction: column;
+	gap: .25em;
+}
+
+.avatar {
+	aspect-ratio: 1;
+	border-radius: 50%;
+	max-width: 64px;
+	width: 3em;
+}
+
+body > .user-card .avatar {
+	max-width: 256px;
+	width: 18vmin;
+}
+
+.user-card .username {
+	font-size: larger;
+	font-weight: bolder;
+}
+
+body > .user-card .username {
+	font-size: min(32px, 3.3vmin);
+	font-weight: bold;
+}
+
+body > .user-card .email > .provider {
+	color: hsl(var(--base-hue) 16% 40%);
+}
+
+.user-card > .metadata .last-seen {
+	color: hsl(var(--base-hue) 16% 50%);
+	font-size: smaller;
+}
+
+.user-card > .metadata .last-seen::before {
+	content: "Last seen: ";
+}
+
+.action-row {
+	display: flex;
+	gap: .35em;
+	margin-left: auto;
+}
+
+:is(.user-card, .track-card) > .action-row {
+	margin-left: auto;
+}
+
+:is(.user-card, .track-card):not(:hover) > .action-row { display: none }
+
+div.details {
+	display: flex;
+	flex-direction: column;
+	font-size: medium;
+	gap: .35em;
+}
+
+div.row {
+	display: flex;
+	gap: inherit;
+	gap: .35em;
+}
+
+div.row.wrap { flex-wrap: wrap }
+div.row:not(.wrap) > * { width: 100% }
+
+fieldset {
+	border-color: var(--border-color);
+	border-radius: .33em;
+}
+
+fieldset > legend {
+	color: hsl(var(--base-hue) 16% 60%);
+	/* color: var(--border-color); */
+	font-size: smaller;
+	margin-left: .75em;
+}
+
+fieldset:has(> :is(input, textarea):last-child:nth-child(2)) { padding: 0 }
+fieldset > :is(input, textarea):last-child:nth-child(2) {
+	background: none;
+	box-sizing: border-box;
+	padding-block: .35em .625em;
+	padding-inline: .75em;
+	width: 100%;
+}
+
+/* fieldset:has(> input:focus) { outline: none } */
+fieldset > :is(input, textarea):last-child:nth-child(2):focus {
+	border: none !important;
+	box-shadow: none !important;
+	outline: none !important;
+}
+
+:is(input, textarea) {
+	font-size: medium;
+}
+
+.track-card {
+	align-items: center;
+	box-sizing: border-box;
+	display: flex;
+	gap: .85em;
+	padding: .45em;
+}
+
+div.details.grid .track-card {
+	flex-direction: column;
+}
+
+.track-card .thumbnail {
+	border: 1px solid hsl(var(--base-hue) 16% 25%);
 	border-radius: 1em;
-	padding: 2em 4em;
+	width: 200px;
 }
 
-.error {
-	color: red;
+.track-card .thumbnail-wrapper {
+	--avatar-size: 48px;
+	padding-bottom: calc(var(--avatar-size) / 10);
+	padding-right: calc(var(--avatar-size) / 10);
+	position: relative;
 }
 
-.success {
-	color: green;
+.track-card .thumbnail-wrapper > .author {
+	border: 1px solid hsl(var(--base-hue) 16% 25%);
+	bottom: 0;
+	position: absolute;
+	/* right: calc(var(--avatar-size) / 2 * -1); */
+	right: 0;
+	width: var(--avatar-size);
+}
+
+.track-card > .metadata .best-time {
+	color: hsl(var(--base-hue) 16% 50%);
+	font-size: smaller;
+	font-weight: bold;
+}
+
+.track-card > .metadata .rating {
+	color: hsl(var(--base-hue) 16% 50%);
+	font-size: smaller;
+}
+
+.track-card > .metadata .rating::before {
+	content: "Rating: ";
+}
+
+div.details.grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
 }

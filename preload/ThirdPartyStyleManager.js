@@ -3,8 +3,7 @@ if (!self.ThirdPartyStyleManager) {
 		#globalStyle = document.head.appendChild(Object.assign(document.createElement('style'), { id: 'third-party-style-manager.global-style' }));
 		app = null;
 		colorScheme = null;
-		styleSheets = new WeakMap();
-		globalStyle = this.createProxyStyle(this.#globalStyle);
+		globalStyle = this.constructor.createProxyStyle(this.#globalStyle);
 		preferredColorScheme = null;
 		constructor(parent = null) {
 			super();
@@ -36,7 +35,12 @@ if (!self.ThirdPartyStyleManager) {
 			colorScheme.onchange = event => updatePreferredColorScheme(event.target)
 		}
 
-		createProxyStyle(style) {
+		createProxyStyle() {
+			return ThirdPartyStyleManager.createProxyStyle(...arguments)
+		}
+
+		static styleSheets = new WeakMap();
+		static createProxyStyle(style) {
 			if (!(style instanceof HTMLStyleElement))
 				throw new TypeError('style must be an instance of: HTMLStyleElement');
 			Object.defineProperty(style, '_replaceSync', {
@@ -112,13 +116,11 @@ if (!self.ThirdPartyStyleManager) {
 		}
 	}
 
-	self.ThirdPartyStyleManager || Object.defineProperty(self, 'ThirdPartyStyleManager', {
-		value: ThirdPartyStyleManager,
-		writable: true
-	});
+	Object.defineProperty(self, 'ThirdPartyStyleManager', { value: ThirdPartyStyleManager });
 
-	self.GameStyleManager || Object.defineProperty(self, 'GameStyleManager', {
-		value: new ThirdPartyStyleManager(Application),
-		writable: true
-	});
+	document.addEventListener('DOMContentLoaded', function() {
+		Object.defineProperty(self, 'GameStyleManager', {
+			value: new ThirdPartyStyleManager(window.Application)
+		})
+	}, { once: true, passive: true });
 }

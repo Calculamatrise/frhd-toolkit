@@ -1,39 +1,88 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Admin Dashboard - FRHD | Calculamatrise</title>
+	<title>Account Dashboard</title>
 	<link rel="stylesheet" href="/popup/style.css">
-	<link rel="stylesheet" href="/dashboard/style.css">
-	<script type="module" src="/dashboard/script.js" defer></script>
+	<link rel="stylesheet" href="style.css">
+	<script type="module" src="script.js" defer></script>
 </head>
-<body style="display: none">
-	<pre style="font-size: initial;word-wrap: break-word;white-space: pre-wrap;">403 Forbidden</pre>
-	<main>
-		<section caption="featured ghosts">
-			<div class="ofg-actions">
-				<button id="check-features">Check features</button>
-				<progress min="0" value="0" style="display: none;"></progress>
-				<details>
-					<summary>Filters</summary>
-					<label><input type="checkbox" id="auto">Auto</label>
-					<label><input type="checkbox" id="fast" checked>Fast</label>
-					<label><input type="checkbox" id="vehicle" checked>Vehicle</label>
-					<label><input type="checkbox" id="other">Other</label>
-					<label><input type="checkbox" id="ties">Ties</label>
-				</details>
-			</div>
-			<span id="result"></span>
-			<dialog method="dialog" id="featured-ghosts">
-				<form method="dialog">
-					<h3>Select stolen ghosts</h3>
-					<div class="max-width" id="stolen-ghosts"></div>
-					<textarea class="fill-available" id="data" placeholder="No changes made" rows="6" style="font-size: small;margin-top: 1em;" readonly></textarea>
-					<div class="flex max-width">
-						<button value="default">Close</button>
-					</div>
-				</form>
-			</dialog>
-		</section>
-	</main>
+<body>
+	<header>
+		<blockquote class="notice">
+			This feature is unfinished. Some buttons may not work.
+		</blockquote>
+	</header>
+	<div class="user-card">
+		<div class="avatar-wrapper">
+			<img src="" alt="" class="avatar">
+		</div>
+		<div class="metadata">
+			<span class="username"></span>
+			<span class="email"></span>
+		</div>
+	</div>
+	<nav class="scrollable-x">
+		<label for="overview">Overview</label>
+		<label for="friends">Friends</label>
+		<label for="races">Recent Races</label>
+		<label for="tracks">Tracks</label>
+		<!-- Add sub-menu when tracks is selected? -->
+		<!-- <label for="liked">Liked</label> -->
+	</nav>
+	<div class="details">
+		<input type="radio" name="nav" id="overview" checked>
+		<!-- <fieldset>
+			<legend>Personal Information</legend>
+		</fieldset> -->
+		<div class="row">
+			<fieldset>
+				<legend>Username<button style="display: inline-block;"><span class="icon edit"></span></button></legend>
+				<input type="text" data-id="username" readonly>
+			</fieldset>
+			<fieldset>
+				<legend>Email<button style="display: inline-block;"><span class="icon edit"></span></button></legend>
+				<input type="text" data-id="email" readonly>
+			</fieldset>
+		</div>
+		<fieldset>
+			<legend>Description<button style="display: inline-block;"><span class="icon edit"></span></button></legend>
+			<textarea data-id="bio" readonly></textarea>
+		</fieldset>
+		<h4>Password</h4>
+		<div class="row">
+			<fieldset>
+				<legend>Old Password</legend>
+				<input type="text" id="old-password">
+			</fieldset>
+			<fieldset>
+				<legend>New Password</legend>
+				<input type="text" id="new-password">
+			</fieldset>
+		</div>
+		<button disabled>Update Password</button>
+		<div class="row">
+			<fieldset>
+				<legend>Update Forum Password</legend>
+				<input type="text" id="forum-password">
+			</fieldset>
+			<button style="min-width: max-content;width: max-content;padding-inline: clamp(1.5em, 5vw, 5em)" disabled>Update</button>
+		</div>
+	</div>
+	<div class="details">
+		<input type="radio" name="nav" id="friends">
+		<div class="row">
+			<fieldset>
+				<legend>Add Friends</legend>
+				<input type="text">
+			</fieldset>
+			<button style="min-width:max-content;width:max-content">Send Request</button>
+		</div>
+	</div>
+	<div class="details">
+		<input type="radio" name="nav" id="races">
+	</div>
+	<div class="details grid">
+		<input type="radio" name="nav" id="tracks">
+	</div>
 </body>
 </html>

@@ -1,10 +1,8 @@
-@keyframes rotate {
-	to { rotate: 360deg }
-}
+@import url(animations.css);
 
-@keyframes slide {
+/* @keyframes slide {
 	to { left: 0 }
-}
+} */
 
 :root {
 	--base-hue: 207deg;
@@ -67,6 +65,13 @@ body:has(> div.alt.view > input:checked) { translate: -100vw }
 
 .view > nav:has(> :nth-child(4)) { grid-template-columns: repeat(2, 1fr); }
 
+#sponsor {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' aria-hidden='true' height='16' viewBox='0 0 16 16' width='16' fill='%23c96198'%3E%3Cpath d='m8 14.25.345.666a.75.75 0 0 1-.69 0l-.008-.004-.018-.01a7.152 7.152 0 0 1-.31-.17 22.055 22.055 0 0 1-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.066 22.066 0 0 1-3.744 2.584l-.018.01-.006.003h-.002ZM4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.58 20.58 0 0 0 8 13.393a20.58 20.58 0 0 0 3.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.749.749 0 0 1-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5Z'%3E%3C/path%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: .75em center;
+	width: 100%;
+}
+
 #state, .danger, .safe {
 	color: hsl(0deg 0% 100% / 50%);
 	transition: all 200ms;
@@ -84,6 +89,14 @@ body:has(> div.alt.view > input:checked) { translate: -100vw }
 #state.update-available:hover::before { content: "Click to update" }
 #state:hover:active, .danger:hover:active, .safe:hover:active { backdrop-filter: brightness(0.5) }
 .danger.hover-border:hover, .danger-border { box-shadow: inset 0px 0px 1px 1px hsl(0 60% 20% / 1) }
+
+body > footer {
+	color: hsl(var(--base-hue) 10% 50% / 80%);
+	font-size: smaller;
+	opacity: .85;
+	text-align: center;
+	user-select: none;
+}
 
 a.button, button, details > summary, label {
 	-webkit-user-select: none;
@@ -407,55 +420,9 @@ div.details:has(> #keybinds) table tbody tr td:nth-child(1) { color: hsl(0 0% 50
 	width: 2rem;
 }
 
-button.loading { box-shadow: inset 0 0 1px 2px rgba(0, 0, 0, .2) !important }
+:has(> #lastSeen:not(:checked)) + :has(> #lastSeenProfile) { display: none }
 
-.loading {
-	-webkit-user-select: none;
-	color: transparent !important;
-	opacity: 0.5;
-	pointer-events: none;
-	position: relative;
-	transition: box-shadow 240ms;
-	user-select: none;
-}
-
-.loading * { visibility: hidden; }
-.loading::after {
-	animation: rotate 800ms cubic-bezier(.5, .5, .5, .5) infinite;
-	background-color: transparent;
-	border: 2px solid;
-	border-color: white !important;
-	border-bottom-color: transparent !important;
-	border-radius: 50%;
-	content: "";
-	height: 0;
-	inset: 0;
-	margin: auto;
-	padding: 0.25rem;
-	position: absolute;
-	width: 0;
-}
-
-.ripple { overflow: hidden; }
-.ripple::before {
-	background-color: black;
-	border-radius: 50%;
-	content: "";
-	left: calc(var(--offsetX) * 1px);
-	opacity: 0;
-	padding: 50%;
-	pointer-events: none;
-	position: absolute;
-	scale: 2;
-	top: calc(var(--offsetY) * 1px);
-	translate: -50% -50%;
-	transition: translate 800ms ease-out, scale 800ms, opacity 1s;
-}
-
-/* .ripple:not(.focus):active::before, .ripple.focus:not(:focus-within):active::before */
-.ripple:is(:not(.focus), .focus:not(:focus-within)):active::before {
+:disabled {
 	opacity: .5;
-	scale: 0;
-	transition: 0s;
-	translate: -50% -50%;
+	pointer-events: none;
 }
