@@ -7,7 +7,7 @@ toolkit.modules.register('deleteRaces', function() {
 	Application.events.subscribe('leaderboard.rendered', () => {
 		for (const actionRow of document.querySelectorAll('.track-leaderboard-race-row[data-u_id="' + Application.settings.user.u_id + '"] > .track-leaderboard-action:not(:has(> #frhd-toolkit\\.delete-race))')) {
 			const addRace = actionRow.querySelector('.core_icons-btn_add_race');
-			addRace.style.setProperty('display', 'none');
+			addRace?.style.setProperty('display', 'none');
 
 			const btn = toolkit.createElement('span.btn.new-button.button-type-1#frhd-toolkit\\.delete-race', {
 				innerText: 'X',

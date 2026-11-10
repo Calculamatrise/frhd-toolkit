@@ -3,10 +3,8 @@
 let currentUserRegex = null;
 toolkit.modules.register('lastSeen', async function() {
 	if (!location.pathname.startsWith('/u/')) return;
-	if (!currentUserRegex) {
+	if (!currentUserRegex)
 		currentUserRegex = new RegExp(`^/u/${Application.settings.user.u_name}\\b`);
-	}
-
 	if (location.pathname.match(currentUserRegex)) return;
 
 	const { friends, is_profile_owner } = await fetch(location.pathname + '?ajax').then(r => r.json());
@@ -24,8 +22,9 @@ toolkit.modules.register('lastSeen', async function() {
 		.then(r => r.json())
 		.then(({ friends }) => {
 			if ((friends.friend_cnt ?? friends.friends_data.length) == 0) return;
-			const { activity_time_ago } = friends.friends_data.find(({ u_name }) => u_name === Application.router.current_view.username);
-			return activity_time_ago
+			const { activity_time_ago: activityTimeAgo } = friends.friends_data.find(({ u_name }) =>
+				u_name === Application.router.current_view.username.toLowerCase());
+			return activityTimeAgo
 		});
 
 	const span = document.querySelector("div.profile-username.flex-item ~ span:not(.last-seen)");

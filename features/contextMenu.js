@@ -550,7 +550,7 @@ function fetchTASLeaderboard({ createIfNotExists } = {}) {
 
 async function fetchRace(uid, { trackId = GameManager.trackId } = {}) {
 	if (typeof uids == 'object') return fetchRaces(...arguments);
-	let data = GameManager.trackId === trackId && GameSettings.raceData && GameSettings.raceData.find(data => data.user.u_id == userId);
+	let data = GameManager.trackId === trackId && GameSettings.raceData && GameSettings.raceData.find(data => data.user.u_id == uid);
 	if (!data) {
 		data = await Application.Helpers.AjaxHelper.post('track_api/load_races', {
 			t_id: trackId,

@@ -12,6 +12,13 @@ toolkit.modules.register('userAnalytics', function() {
 	document.querySelectorAll("#created_tracks .bottom").forEach(metadata => {
 		metadata.innerHTML = metadata.innerHTML.replace(/<!--|-->/g, '')
 	})
-})
+});
+
+toolkit.styleSheet
+	.set('#created_tracks .trackTile .bottom :is(.profileGravatarIcon, .author)', { display: 'none' })
+	.set('#created_tracks .trackTile .bottom .stat', {
+		display: 'inline-block',
+		// float: 'right' // Only float right if avatar+username are shown
+	})
 
 }

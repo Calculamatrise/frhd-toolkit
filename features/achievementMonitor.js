@@ -8,7 +8,7 @@ toolkit.modules.register('achievementMonitor', function() {
 		Application.events.subscribe('notification.received', ({ data }) => {
 			if ('undefined' != typeof data && ('undefined' != typeof data.achievements_earned)) {
 				'undefined' != typeof data.achievements_earned && Application.events.publish('achievementsEarned', data.achievements_earned);
-				toolkit.refreshAchievements({ force: true }) // only update percentages // updateAchievements?
+				refreshAchievements({ force: true }) // only update percentages // updateAchievements?
 			}
 		});
 		achievementMonitor = {

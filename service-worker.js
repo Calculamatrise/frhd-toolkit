@@ -49,7 +49,7 @@ const contentScripts = [{
 	id: "connection-broker",
 	js: ["broker.js"],
 	matches: documentUrlPatterns,
-	runAt: "document_end"
+	runAt: "document_start"
 }, moduleScript];
 
 chrome.runtime.onInstalled.addListener(function() {

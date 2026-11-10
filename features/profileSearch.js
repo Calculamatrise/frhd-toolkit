@@ -159,7 +159,7 @@ function updateTracks(details) {
 
 	const search = new Map(inputs.map(input => [input.name, ((input.type === 'checkbox' || input.type === 'radio') ? input.checked : null) ?? input.value ?? input.innerText]));
 
-	const activePanel = document.querySelector('.tab-panel.active ul')
+	const activePanel = document.querySelector('.tab-panel[style="display: block;"] ul') || document.querySelector('.tab-panel.active ul')
 		, tracks = Array.from(activePanel.children)
 		.filter(n => n.querySelector('.trackTile'));
 	for (const node of tracks)
@@ -252,8 +252,8 @@ toolkit.styleSheet
 		userSelect: 'none'
 	})
 	.set('.tab_buttons .sort-filter > main', {
-		backdropFilter: 'brightness(.95) blur(.1em) contrast(2.5)',
-		backgroundColor: 'var(--bg-clr, hsl(0deg 0% 50% / 15%))',
+		backdropFilter: 'brightness(.318) blur(.1em) contrast(2.5)',
+		backgroundColor: 'var(--bg-clr, hsl(0deg 0% 40% / 15%))',
 		border: '1px solid hsl(0 0% 50% / 12%)',
 		borderRadius: '.75em',
 		boxShadow: '0 2px .4em 0 hsl(0 0% 0% / 50%)',

@@ -1,35 +1,81 @@
 if (!self.ModuleLoader) {
+	const domReady = new Promise(r => document.addEventListener("DOMContentLoaded", r, { once: true }));
 	class ModuleLoader {
 		#ctx = null;
 		#initialized = false;
+		#initialization = null;
 		#initialLoad = false;
-		#subscribed = false;
-
 		constructor(context, cancelInit) {
 			this.#ctx = context;
-
 			Object.defineProperty(this, 'cache', {
 				configurable: false,
 				enumerable: false,
 				value: new Map(),
 				writable: false
 			});
+			!cancelInit && this.init()
+		}
 
-			if (!cancelInit) {
-				this.init()
+		// Replace #initialLoad with #loaded since state can change on navigate/route
+		// Track loaded state with "router.back"/"router.navigate" events on Application.events
+		// get #loaded() {
+		// 	return window.Application?.router?.current_view.initial_page_load
+		// }
+
+		async init() {
+			if (this.#initialized) {
+				console.warn(`ModuleLoader already initialized`);
+				return;
+			}
+
+			if (this.#initialization)
+				return this.#initialization;
+
+			this.#initialization = this.#init();
+
+			try {
+				await this.#initialization;
+				this.#initialized = true;
+				this.#trigger();
+			} finally {
+				this.#initialization = null;
 			}
 		}
 
-		#addTrigger() {
-			if (!this.#subscribed) {
-				Application.events.subscribe('mainview.loaded', this.trigger.bind(this));
-				this.#subscribed = true;
+		register(name, fn) {
+			if (this.cache.has(name)) {
+				console.warn(`Module ${name} already registered`);
+				return;
 			}
 
-			if (!this.#initialLoad && Application.router?.current_view.initial_page_load) {
-				this.trigger();
-				this.#initialLoad = true
+			this.cache.set(name, fn);
+			if (this.#initialLoad)
+				this.#fire(name, fn)
+		}
+
+		async #init() {
+			await domReady;
+			if (typeof Application == "undefined")
+				throw new ReferenceError("Application not found on window");
+
+			if (!Application.router?.current_view.initial_page_load) {
+				await new Promise(resolve => {
+					let listener;
+					Application.events.subscribe("mainview.loaded", listener = () => {
+						Application.events.unsubscribe("mainview.loaded", listener);
+						resolve();
+					});
+				});
 			}
+
+			this.#initialLoad = true;
+			Application.events.subscribe("mainview.loaded", this.#trigger);
+		}
+
+		#trigger = () => {
+			const ctx = this.#getContext();
+			for (const [name, fn] of this.cache)
+				this.#fire(name, fn, ctx)
 		}
 
 		#fire(name, fn, ctx = this.#getContext()) {
@@ -51,47 +97,6 @@ if (!self.ModuleLoader) {
 			if (Application.settings?.user) ctx.user = Application.settings.user;
 
 			return Object.freeze(ctx)
-		}
-
-		init() {
-			if (this.#initialized) {
-				console.warn(`ModuleLoader already initialized`);
-				return;
-			}
-
-			if (window.Application?.router?.current_view.initial_page_load) {
-				this.#addTrigger();
-			} else {
-				document.addEventListener('DOMContentLoaded', () => {
-					if (window.Application) {
-						this.#addTrigger();
-					} else {
-						console.warn('Application not loaded!');
-					}
-				}, { once: true, passive: true });
-			}
-
-			this.#initialized = true
-		}
-
-		register(name, fn) {
-			if (this.cache.has(name)) {
-				console.warn(`Module ${name} already registered`);
-				return;
-			}
-
-			this.cache.set(name, fn);
-			if (this.#initialLoad) {
-				this.#fire(name, fn)
-			}
-		}
-
-		trigger() {
-			this.#initialLoad = true;
-
-			const ctx = this.#getContext();
-			for (const [name, fn] of this.cache)
-				this.#fire(name, fn, ctx)
 		}
 	}
 

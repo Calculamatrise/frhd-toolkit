@@ -36,6 +36,6 @@ chrome.runtime.onMessageExternal.addListener(function(message, sender, sendRespo
 		const manifest = chrome.runtime.getManifest();
 		return sendResponse({ version: manifest.version });
 	default:
-		return sendResponse("418 I'm a teapot")
+		return sendResponse({ message: "418 I'm a teapot" })
 	}
 });
